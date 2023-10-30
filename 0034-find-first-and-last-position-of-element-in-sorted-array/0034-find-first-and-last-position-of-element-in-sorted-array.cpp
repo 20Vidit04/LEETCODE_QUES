@@ -1,52 +1,57 @@
 class Solution {
 public:
-     int firstOccrance(vector<int>& nums, int target){
-      int s=0;
-        int e=nums.size()-1;
-        int ans=-1;
-        while(s<=e){
-            int mid=s+(e-s)/2;
-            if(nums[mid]==target){
-                ans=mid;
-                e=mid-1;
-            }
-          else  if(nums[mid]<target){
-                s=mid+1;
-            }
-            else{
-                e=mid-1;
-            }
-        }
-        return ans;
-    }
-     int lastOccrance(vector<int>& nums, int target){
-      int s=0;
-        int e=nums.size()-1;
-        int ans=-1;
-        while(s<=e){
-            int mid=s+(e-s)/2;
-            if(nums[mid]==target){
-                ans=mid;
-                s=mid+1;
-            }
-           else if(nums[mid]<target){
-                s=mid+1;
-            }
-            else{
-                e=mid-1;
-            }
-        }
-        return ans;
-    }
-    
+   int firstOccrance(vector<int>& arr,int s,int e,int k){
+    int ans=1;
+if(s>e || arr[e]<k){
+    return -1;
+}
+int mid=s+(e-s)/2;
+if(arr[mid]==k){
+	int p=firstOccrance(arr,s,mid-1,k);
+    if(p<mid && p!=-1)
+        return p;
+    else
+        return mid;
+}
+
+if(arr[mid]<k){
+    return firstOccrance(arr,mid+1,e,k);
+}
+else{
+    return firstOccrance(arr,s,mid-1,k);
+}
+return ans;
+}
+int lastOccrance(vector<int>& arr,int s,int e,int k){
+     int ans=1;
+if(s>e || arr[e]<k){
+    return -1;
+}
+int mid=s+(e-s)/2;
+if(arr[mid]==k){
+	int p=lastOccrance(arr,mid+1,e,k);
+    if(p>mid && p!=-1)
+        return p;
+    else
+        return mid;
+}
+
+if(arr[mid]<k){
+    return lastOccrance(arr,mid+1,e,k);
+}
+else{
+    return lastOccrance(arr,s,mid-1,k);
+}
+return ans;
+}
     vector<int> searchRange(vector<int>& nums, int target) {
         
-        vector<int> soln;
-        int ans1=firstOccrance(nums,target);
-        int ans2=lastOccrance(nums,target);
+        vector<int> soln(2,-1);
+        int n=nums.size()-1;
+        soln[0]=firstOccrance(nums,0,n,target);
+        soln[1]=lastOccrance(nums,0,n,target);
         
-        soln.push_back(ans1);
-        soln.push_back(ans2);
+        
         
         return soln;
     }
