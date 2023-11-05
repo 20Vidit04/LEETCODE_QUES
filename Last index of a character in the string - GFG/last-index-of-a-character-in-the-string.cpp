@@ -5,16 +5,23 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
     public:
-    
+    void solve(string &s,char p,int &ans,int i){
+        if(i>=s.size())
+        return ;
+        
+        if(s[i]==p){
+            ans=i;
+            
+        }
+         solve(s,p,ans,i+1);
+        
+    }
     int LastIndex(string s, char p){
         //complete the function here
+        int i=0;
         int ans=-1;
-        for(int i=0;i<s.length();i++){
-            if(s[i]==p){
-                 ans=i;
-            }
-        }
-        return ans;
+       solve(s,p,ans,i);
+       return ans;
     }
 };
 
